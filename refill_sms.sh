@@ -6,7 +6,7 @@ trap "rm -f $LOCK" EXIT
 
 INTERFACE="usb0"
 THRESHOLD=838860800
-NUMBER=""
+NUMBER=""            # SMS recipient (e.g. 80808)
 STATE_FILE="/tmp/last_refill_bytes"
 DEV="/dev/ttyUSB2"
 MSG="Refill"
@@ -63,7 +63,7 @@ if [ "$DIFF" -ge "$THRESHOLD" ]; then
 
     if [ "$SMS_EXIT" -eq 0 ]; then
         echo "$TOTAL" > "$STATE_FILE"
-        logger "800MB reached. Auto-SMS Refill sent."
+        logger "${THRESHOLD_MB} MB reached. Auto-SMS Refill sent."
     else
         logger "Auto-SMS Refill failed or timed out."
     fi
